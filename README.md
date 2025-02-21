@@ -1,3 +1,7 @@
+# multi-grpc
+
+This project demonstrates the ability to implement server-client pairs using the same gRPC protocol definition file (proto) but with different programming languages. The project includes two servers, one written in Python and the other in Go, and two clients, also written in Python and Go.
+
 Library Management System
 
 library.proto file with message definitions and service methods is defined.
