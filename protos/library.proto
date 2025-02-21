@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+// The library service definition.
+service LibraryService {
+  // unary RPCs: The client sends a single request to the server and gets a single response back, just like a normal function call.
+  // sends book request and get details as book response.
+  rpc AddBook (BookRequest) returns (BookResponse) {}
+  // server streaming RPCs: sends empty request and response as stream available of list of books.
+  rpc ListAvailableBooks(EmptyRequest) returns (stream BookResponse) {}
+  // client streaming RPCs: sends stream of the borrow request request and response as the borrow status
+  rpc BorrowBooks(stream BorrowRequest) returns (BorrowStatus) {}
+  // bidirectional streaming RPCs: sends stream of borrow request and response of stream book response
+  rpc LiveBookUpdates(stream BorrowRequest) returns (stream Book) {}
+}
+
+// defining Book as a data stucture like a class of structured data.
+// represents a book with attributes like id, title, author, genre and availability
+message Book {
+  string id = 1;        // unique identifier for the book
+  string title = 2;     // title of the book
+  string author = 3;    // author of the book
+  string genre = 4;     // genre of the book
+  bool is_available = 5; // availability status
+}
+
+// REQUEST - to add a book - contains details for adding a book.
+message BookRequest{
+    Book book = 1;  // Book object to be added.
+}
+
+// RESPONSE - after adding a book - confirmation or details after adding a book (already structured in Book).
+message BookResponse{
+    string message = 1; // confirmation message or if any error message.
+    Book book = 2;      // Book object which is added.
+}
+
+// REQUEST - to borrow a book - contains details for borrowing a book.
+message BorrowRequest{
+    string book_id = 1; // book to borrow
+    string user_id = 2; // user who borrow
+}
+
+// RESPONSE - after borrowing a book - confirmation details of the borrow book.
+message BorrowStatus{
+    string status = 1;  // status of borrowing.
+    string message = 2; // confirmation message or if any error message.
+}
+
+// REQUEST - to fetch available books - used for server streaming when no input is needed.
+message EmptyRequest{}
