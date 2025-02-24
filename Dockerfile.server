@@ -1,0 +1,23 @@
+# setting image base as python.
+FROM python
+
+# setting the working directory in the container.
+WORKDIR /server-client-implementation
+
+# copying the generated protobuf files into the python directory for the python files.
+COPY python/library_pb2.py python/library_pb2_grpc.py python/
+
+# copying the python server into the python directory.
+COPY python/library-server.py python/
+
+# installing required python dependencies for gRPC communication.
+RUN pip install grpcio grpcio-tools
+
+# setting the PYTHONPATH to include the 'proto' directory
+# ENV PYTHONPATH="${PYTHONPATH}:/server-client-implementation/proto"
+
+# server listen on 50051 to communicate with client
+EXPOSE 50051
+
+# command to start the python server file.
+CMD ["python", "python/library-server.py"]
