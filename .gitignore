@@ -1,7 +1,8 @@
-protos/__pycache__/
-__pycache__/
 
+python/__pycache__/
 __pycache__/
+python/library_pb2_grpc.py
+python/library_pb2.py
 *.pyc
 *.pyo
 .DS_Store

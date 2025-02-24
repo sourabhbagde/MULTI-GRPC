@@ -34,3 +34,15 @@ message BorrowRequest: For borrowing a book.
 message BorrowStatus: For borrowing responses.
 message EmptyRequest: For methods with no input.
 service LibraryService: Define the service with all the RPCs.
+
+# commmad to create python grpc files in python folder
+
+python -m grpc_tools.protoc -I=../proto --python_out=. --grpc_python_out=. ../proto/library.proto
+genereated files are
+library_pb2_grpc.py
+library_pb2.py
+
+# command to run server-client files in python folder
+
+python library-server.py (in server terminal)
+python library-client.py (in another client terminal)
