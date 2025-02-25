@@ -1,5 +1,9 @@
 syntax = "proto3";
 
+// to specify the Go import path in same Go folder
+package librarypb; 
+option go_package = "./librarypb";
+
 // The library service definition.
 service LibraryService {
   // unary RPCs: The client sends a single request to the server and gets a single response back, just like a normal function call.

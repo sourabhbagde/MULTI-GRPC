@@ -46,3 +46,19 @@ library_pb2.py
 
 python library-server.py (in server terminal)
 python library-client.py (in another client terminal)
+
+# command to installation for go
+
+brew install go
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest (necessary plugins to generate Go code from .proto file)
+go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+
+export PATH="$PATH:$(go env GOPATH)/bin" (to set executable file for Go)
+go mod init grpc-library (to initialize go mod)
+
+# command to generation for proto file for go
+
+protoc -I=../proto \
+ --go_out=. \
+ --go-grpc_out=. \
+ ../proto/library.proto
