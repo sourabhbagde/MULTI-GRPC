@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-// to specify the Go import path in same Go folder
-package librarypb; 
-option go_package = "./librarypb";
+
+option go_package = "server-client-implementation/proto;librarypb";
+
 
 // The library service definition.
 service LibraryService {
