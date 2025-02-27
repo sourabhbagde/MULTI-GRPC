@@ -51,7 +51,7 @@ class LibraryService(library_pb2_grpc.LibraryServiceServicer):
                 yield library_pb2.BookResponse(message="Updated book status", book=books_stored[book_id])
 
 def serve():
-    # port is defined and assigned to value of server port running.
+    # port is defined and assigned to value of server port running at 50051.
     port = '50051'
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     library_pb2_grpc.add_LibraryServiceServicer_to_server(LibraryService(), server)

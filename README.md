@@ -1,3 +1,5 @@
+<!-- UTA Student ID(s): 1002116926, 1002147720 -->
+
 # multi-grpc
 
 This project demonstrates the ability to implement server-client pairs using the same gRPC protocol definition file (proto) but with different programming languages. The project includes two servers, one written in Python and the other in Go, and two clients, also written in Python and Go.
@@ -44,5 +46,35 @@ library_pb2.py
 
 # command to run server-client files in python folder
 
+docker build -t library-server -f Dockerfile.server .
+docker build -t library-client -f Dockerfile.client .
 python library-server.py (in server terminal)
 python library-client.py (in another client terminal)
+
+# command to installation for go
+
+brew install go
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest (necessary plugins to generate Go code from .proto file)
+go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+
+export PATH="$PATH:$(go env GOPATH)/bin" (to set executable file for Go)
+go mod init grpc-library (to initialize go mod)
+
+# command to generation for proto file for go
+
+go mod init server-client-implementation
+go get google.golang.org/grpc
+go mod tidy
+
+protoc -I=. --go_out=. --go-grpc_out=. proto/library.proto
+
+# to build docker files
+
+docker build -t server -f Dockerfile.go-server .
+docker build -t client -f Dockerfile.go-client .
+
+# to creat network
+
+docker network create library-network
+docker run -d --name go-server --network library-network -p 50051:50051 server
+docker run --rm --name client --network library-network client
