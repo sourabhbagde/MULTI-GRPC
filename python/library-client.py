@@ -27,7 +27,7 @@ def borrow_books(stub):
     response = stub.BorrowBooks(iter(requests))
     print(f"BorrowBooks Response: {response.status} with message: {response.message}")
 
-# 
+# live updates on availablity of books.
 def live_book_updates(stub):
     def request_iterator():
         requests= [library_pb2.BorrowRequest(book_id="1", user_id="Sourabh"),library_pb2.BorrowRequest(book_id="2", user_id="Saicharan")]
@@ -40,7 +40,7 @@ def live_book_updates(stub):
 
 def run():
     # connecting host to gRPC server at port 50051 as channel
-    with grpc.insecure_channel('library-server:50051') as channel:
+    with grpc.insecure_channel('localhost:50051') as channel:
         # creating a stub for library_pb2_grpc (methods of LibraryService) 
         stub = library_pb2_grpc.LibraryServiceStub(channel)
         print("Client connected to gRPC server...\n")

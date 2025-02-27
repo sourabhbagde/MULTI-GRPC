@@ -1,0 +1,26 @@
+# setting image base as golang.
+FROM golang
+
+# setting the working directory in the container.
+WORKDIR /server-client-implementation
+
+# copying the generated protobuf Go files into the container.
+COPY proto/ proto/
+
+# copying the Go client source file into the container.
+COPY client.go .
+
+# copying go.mod and go.sum to download dependencies.
+COPY go.mod go.sum ./
+
+# install required dependencies.
+RUN go mod tidy
+
+# build the Go server binary.
+RUN go build -o client client.go
+
+# server listens on 50051 to communicate with clients.
+# EXPOSE 50051
+
+# command to start the Go server binary.
+CMD ["./client"]
