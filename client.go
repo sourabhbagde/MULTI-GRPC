@@ -13,7 +13,8 @@ import (
 )
 
 func main() {
-	conn, err := grpc.Dial("library-server:50051", grpc.WithInsecure())
+	// change here port to connect with server files in the python or go (server accordingly).
+	conn, err := grpc.Dial("localhost:50052", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect: %v", err)
 	}
@@ -23,7 +24,7 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	// Add first book.
+	// adding a first book.
 	book1 := &pb.Book{
 		Id:          "1",
 		Title:       "Book Title 1",
@@ -37,7 +38,7 @@ func main() {
 	}
 	fmt.Println("AddBook response:", res.Message)
 
-	// Add second book.
+	// adding a second book.
 	book2 := &pb.Book{
 		Id:          "2",
 		Title:       "Book Title 2",
@@ -94,10 +95,10 @@ func main() {
 		log.Fatalf("Error starting LiveBookUpdates stream: %v", err)
 	}
 
-	// Launch a goroutine to receive live updates.
+	// launching a goroutine to receive live updates.
 	go func() {
 		for {
-			// Expecting a Book message.
+			// expecting a Book message.
 			book, err := liveStream.Recv()
 			if err == io.EOF {
 				break
@@ -115,8 +116,8 @@ func main() {
 
 	// Send live update requests.
 	liveRequests := []*pb.BorrowRequest{
-		{BookId: "1", UserId: "User1"},
-		{BookId: "2", UserId: "User2"},
+		{BookId: "1", UserId: "Sourabh Bagde"},
+		{BookId: "2", UserId: "Sai Charan Challa"},
 	}
 	for _, req := range liveRequests {
 		if err := liveStream.Send(req); err != nil {
