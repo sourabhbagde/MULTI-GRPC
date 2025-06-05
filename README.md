@@ -3,7 +3,7 @@
 
 This project demonstrates the ability to implement server-client pairs using the same gRPC protocol definition file (proto) but with different programming languages. The project includes two servers, one written in Python and the other in Go, and two clients, also written in Python and Go.
 
-Library Management System
+### Library Management System
 
 library.proto file with message definitions and service methods is defined.
 
@@ -72,7 +72,7 @@ protoc -I=. --go_out=. --go-grpc_out=. proto/library.proto
 docker build -t server -f Dockerfile.go-server .
 docker build -t client -f Dockerfile.go-client .
 
-### to creat network
+### to create network and run in docker
 
 docker network create library-network
 docker run -d --name go-server --network library-network -p 50051:50051 server
